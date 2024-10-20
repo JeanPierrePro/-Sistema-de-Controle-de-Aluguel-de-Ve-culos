@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aluguel de Carros</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Carros Disponíveis para Aluguel</h1>
+    <ul>
+        {% for carro in carros %}
+            <li>
+                <strong>{{ carro['modelo'] }} - {{ carro['ano'] }}</strong>
+                {% if carro['disponivel'] %}
+                    <form action="{{ url_for('alugar_carro', carro_id=carro['id']) }}" method="POST">
+                        <button type="submit">Alugar</button>
+                    </form>
+                {% else %}
+                    <span>Indisponível</span>
+                    <form action="{{ url_for('devolver_carro', carro_id=carro['id']) }}" method="POST">
+                        <button type="submit">Devolver</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
